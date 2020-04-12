@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 void main() {
   runApp(MyApp());
@@ -85,7 +86,7 @@ class AnimatedLogo extends AnimatedWidget{
     return Opacity(
       opacity: animation.value ,
       child: Transform.rotate(
-        angle: rotateAnimation.evaluate(animation) ,
+        angle: animation.value * 2.0 * math.pi, 
         child: Container(
           width: sizeAnimation.evaluate(animation),
           height: sizeAnimation.evaluate(animation),
