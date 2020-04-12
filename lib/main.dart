@@ -42,13 +42,6 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
 
     _animationController.forward();
 
-    _animation.addListener(() { 
-      setState(() {
-        
-      });
-    });
-   
-
 
     super.initState();
   }
@@ -59,19 +52,39 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-      return Scaffold(
+    return Scaffold(
       appBar: AppBar(
       
         title: Text('Flutter Basic Animations'),
       ),
       body: Center(
-        child: Container(
-          width: 150,
-          height: 150,
-          color: _animation.value,
-          child: FlutterLogo(),
-        ),
+        child: AnimatedLogo(animation: _animation,),
       )
     );
   }
+}
+
+class AnimatedLogo extends AnimatedWidget{
+
+  AnimatedLogo({
+    Key key,
+    Animation animation,
+
+  }):super(
+    key:key,
+    listenable:animation
+  );
+
+
+  @override
+  Widget build(BuildContext context) {
+    final Animation<Color> animation=listenable;
+    return Container(
+      width: 150,
+      height: 150,
+      color: animation.value,
+      child: FlutterLogo(),
+    );
+  }
+
 }
