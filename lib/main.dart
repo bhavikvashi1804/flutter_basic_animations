@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
     );
     _animation=Tween<double>(begin: 0.0,end: 1.0).animate(_animationController);
 
-    _animationController.forward();
+    _animationController..repeat();
 
 
     super.initState();
