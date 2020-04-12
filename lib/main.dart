@@ -22,7 +22,39 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin{
+
+
+  Animation<double> _animation;
+  AnimationController _animationController;
+  
+  
+  
+
+
+  @override
+  void initState() {
+    _animationController=AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 1500),
+    );
+    _animation=Tween<double>(begin: 20.0,end: 150.0).animate(_animationController);
+
+    _animationController.forward();
+
+    _animation.addListener(() { 
+      setState(() {
+        
+      });
+    });
+   
+
+
+    super.initState();
+  }
+
+
+
   
 
   @override
@@ -33,8 +65,12 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('Flutter Basic Animations'),
       ),
       body: Center(
-        child:Text('Hello')
-      ),
+        child: Container(
+          width: _animation.value,
+          height: _animation.value,
+          child: FlutterLogo(),
+        ),
+      )
     );
   }
 }
