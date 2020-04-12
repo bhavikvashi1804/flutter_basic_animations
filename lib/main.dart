@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './brick_anim.dart';
+import './flipper.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home: BrickPage(),
+      home: FlipperPage(),
     );
   }
 }
