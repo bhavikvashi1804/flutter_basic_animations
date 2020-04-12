@@ -25,7 +25,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin{
 
 
-  Animation<Color> _animation;
+  Animation<double> _animation;
   AnimationController _animationController;
   
   
@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
       vsync: this,
       duration: Duration(milliseconds: 1500),
     );
-    _animation=ColorTween(begin: Colors.yellow,end: Colors.cyan).animate(_animationController);
+    _animation=Tween<double>(begin: 0.0,end: 1.0).animate(_animationController);
 
     _animationController.forward();
 
@@ -78,12 +78,14 @@ class AnimatedLogo extends AnimatedWidget{
 
   @override
   Widget build(BuildContext context) {
-    final Animation<Color> animation=listenable;
-    return Container(
-      width: 150,
-      height: 150,
-      color: animation.value,
-      child: FlutterLogo(),
+    final Animation<double> animation=listenable;
+    return Opacity(
+      opacity: animation.value ,
+      child: Container(
+        width: 150,
+        height: 150,
+        child: FlutterLogo(),
+      ),
     );
   }
 
