@@ -39,17 +39,9 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
       vsync: this,
       duration: Duration(milliseconds: 1500),
     );
-    _animation=CurvedAnimation(parent: _animationController, curve: Curves.bounceOut);
+    _animation=CurvedAnimation(parent: _animationController, curve: Curves.decelerate);
 
-    _animation.addStatusListener((status) { 
-      if(status==AnimationStatus.completed){
-        _animationController.reverse();
-      }
-      else if(status==AnimationStatus.dismissed){
-        _animationController.forward();
-      }
-
-    });
+   
 
     _animationController.forward();
 
