@@ -64,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   void myListener(status){
 
     if(status==AnimationStatus.completed){
+      _animation.removeStatusListener(myListener);
       _animationController.reset();
       _animation=Tween<double>(begin: 0.0,end: 1.0).animate(
         CurvedAnimation(
