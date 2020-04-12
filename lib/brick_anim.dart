@@ -14,16 +14,36 @@ class _BrickPageState extends State<BrickPage> {
       ),
       
       body: Center(
-        child: Container(
-          height: 10,
-          width: 40,
-          decoration: BoxDecoration(
-            color: Colors.green,
-            borderRadius: BorderRadius.circular(15.0)
-          ),
-          
-        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Brick(),
+            Brick(),
+            Brick(),
+            Brick(),
+          ],
+        )
       ),
+    );
+  }
+}
+
+class Brick extends StatelessWidget {
+  
+  final double leftMargin;
+  Brick({this.leftMargin=15.0});
+  
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 10,
+      width: 40,
+      margin: EdgeInsets.only(left: leftMargin),
+      decoration: BoxDecoration(
+        color: Colors.green,
+        borderRadius: BorderRadius.circular(15.0)
+      ),
+      
     );
   }
 }
