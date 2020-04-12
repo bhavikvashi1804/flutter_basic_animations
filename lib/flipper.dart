@@ -24,6 +24,8 @@ class _FlipperPageState extends State<FlipperPage> with SingleTickerProviderStat
       TweenSequenceItem(tween: Tween(begin: 0.0, end: -math.pi / 2), weight: 0.5),
       TweenSequenceItem(tween: Tween(begin: math.pi / 2, end: 0.0), weight: 0.5)
     ]).animate(_animationController);
+
+    //we have used here TweenSeq because 
   
     super.initState();
   }
@@ -34,6 +36,8 @@ class _FlipperPageState extends State<FlipperPage> with SingleTickerProviderStat
     super.dispose();
   }
 
+
+  //on tap handle the forward / reverse
   _doAnim() {
     if (!mounted) return;
     if (_reversed) {
@@ -67,6 +71,8 @@ class _FlipperPageState extends State<FlipperPage> with SingleTickerProviderStat
                     children: <Widget>[CardOne(), CardTwo()],
                     alignment: Alignment.center,
                     index: _animationController.value < 0.5 ? 0 : 1,
+                    // if val=0 then display CardOne 
+                    //else display CardTwo
                   ),
                 ),
               ),
