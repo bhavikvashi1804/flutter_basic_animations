@@ -67,8 +67,8 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
 
 class AnimatedLogo extends AnimatedWidget{
 
-  final Tween<double> sizeAnimation=Tween<double>(begin: 20,end: 150);
-  final Tween<double> rotateAnimation=Tween<double>(begin: 0,end:30);
+  
+  final Tween<double> scaleAnimation=Tween<double>(begin: 0,end:10);
 
   AnimatedLogo({
     Key key,
@@ -85,11 +85,9 @@ class AnimatedLogo extends AnimatedWidget{
     final Animation<double> animation=listenable;
     return Opacity(
       opacity: animation.value ,
-      child: Transform.rotate(
-        angle: animation.value * 2.0 * math.pi, 
+      child: Transform.scale(
+        scale: scaleAnimation.evaluate(animation), 
         child: Container(
-          width: sizeAnimation.evaluate(animation),
-          height: sizeAnimation.evaluate(animation),
           child: FlutterLogo(),
         ),
       ),
