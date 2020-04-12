@@ -41,7 +41,17 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
     );
     _animation=Tween<double>(begin: 0.0,end: 1.0).animate(_animationController);
 
-    _animationController..repeat();
+    _animation.addStatusListener((status) { 
+      if(status==AnimationStatus.completed){
+        _animationController.reverse();
+      }
+      else if(status==AnimationStatus.dismissed){
+        _animationController.forward();
+      }
+
+    });
+
+    _animationController.forward();
 
 
     super.initState();
