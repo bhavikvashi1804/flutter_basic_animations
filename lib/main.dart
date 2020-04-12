@@ -39,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
       vsync: this,
       duration: Duration(milliseconds: 1500),
     );
-    _animation=Tween<double>(begin: 0.0,end: 1.0).animate(_animationController);
+    _animation=CurvedAnimation(parent: _animationController, curve: Curves.bounceOut);
 
     _animation.addStatusListener((status) { 
       if(status==AnimationStatus.completed){
@@ -77,8 +77,8 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
 
 class AnimatedLogo extends AnimatedWidget{
 
-  
-  final Tween<double> scaleAnimation=Tween<double>(begin: 0,end:10);
+
+
 
   AnimatedLogo({
     Key key,
@@ -96,7 +96,7 @@ class AnimatedLogo extends AnimatedWidget{
     return Opacity(
       opacity: animation.value ,
       child: Transform.scale(
-        scale: scaleAnimation.evaluate(animation), 
+        scale: animation.value*10, 
         child: Container(
           child: FlutterLogo(),
         ),
