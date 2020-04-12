@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
+
 
 class BrickPage extends StatefulWidget {
   @override
@@ -15,10 +17,12 @@ class _BrickPageState extends State<BrickPage> with TickerProviderStateMixin{
    
     _animationController=AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 20)
+      duration: Duration(milliseconds: 5000)
     );
 
     _tween=Tween(begin: 0.0,end: 1.0);
+
+    _animationController.repeat();
 
     super.initState();
   }
@@ -103,16 +107,90 @@ class _BrickPageState extends State<BrickPage> with TickerProviderStateMixin{
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Brick(),
-            Brick(),
-            Brick(),
-            Brick(),
+            AnimatedBrick(
+              animations: [animOne, animTwo],
+              controller: _animationController,
+              marginLeft: 0.0,
+              alignment: Alignment.centerLeft,
+              isClockWise: true,
+            ),
+            AnimatedBrick(
+              animations: [animThree, animEight],
+              controller: _animationController,
+              marginLeft: 0.0,
+              isClockWise: false,
+            ),
+            AnimatedBrick(
+              animations: [animFour, animSeven],
+              controller: _animationController,
+              marginLeft: 30.0,
+              isClockWise: true,
+            ),
+            AnimatedBrick(
+              animations: [animFive, animSix],
+              controller: _animationController,
+              marginLeft: 30.0,
+              isClockWise: false,
+            ),
           ],
         )
       ),
     );
   }
 }
+
+
+class AnimatedBrick extends AnimatedWidget{
+
+  final AnimationController controller;
+  final List<Animation> animations;
+  final double marginLeft;
+  final Alignment alignment;
+  final bool isClockWise;
+
+  AnimatedBrick(
+      {Key key,
+      this.controller,
+      this.animations,
+      this.marginLeft,
+      this.alignment = Alignment.centerRight,
+      this.isClockWise})
+      : super(key: key, listenable: controller);
+
+  
+  Matrix4 clockWise(animation) =>
+      Matrix4.rotationZ(animation.value * math.pi * 2.0 * 0.5);
+  Matrix4 antiClockWise(animation) =>
+      Matrix4.rotationZ(-(animation.value * math.pi * 2.0 * 0.5));
+  
+  
+  @override
+  Widget build(BuildContext context) {
+    var firstTransformation, secondTransformation;
+
+    if (isClockWise) {
+      firstTransformation = clockWise(animations[0]);
+      secondTransformation = clockWise(animations[1]);
+    } else {
+      firstTransformation = antiClockWise(animations[0]);
+      secondTransformation = antiClockWise(animations[1]);
+    }
+
+    return Transform(
+      transform: firstTransformation,
+      alignment: alignment,
+      child: Transform(
+        transform: secondTransformation,
+        alignment: alignment,
+        child: Brick(
+          leftMargin: marginLeft,
+        ),
+      ),
+    );
+  }
+
+}
+
 
 class Brick extends StatelessWidget {
   
