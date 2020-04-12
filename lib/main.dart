@@ -66,6 +66,8 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
 
 class AnimatedLogo extends AnimatedWidget{
 
+  final Tween<double> sizeAnimation=Tween<double>(begin: 20,end: 150);
+
   AnimatedLogo({
     Key key,
     Animation animation,
@@ -82,8 +84,8 @@ class AnimatedLogo extends AnimatedWidget{
     return Opacity(
       opacity: animation.value ,
       child: Container(
-        width: 150,
-        height: 150,
+        width: sizeAnimation.evaluate(animation),
+        height: sizeAnimation.evaluate(animation),
         child: FlutterLogo(),
       ),
     );
