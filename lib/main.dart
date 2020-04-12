@@ -39,7 +39,12 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
       vsync: this,
       duration: Duration(milliseconds: 1500),
     );
-    _animation=CurvedAnimation(parent: _animationController, curve: Curves.decelerate);
+    _animation=Tween<double>(begin: -1.0,end: 0.0).animate(
+      CurvedAnimation(
+        curve: Curves.fastOutSlowIn,
+        parent: _animationController
+      )
+    )..addStatusListener(myListener);
 
    
 
@@ -49,51 +54,54 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
+
+  void myListener(status){
+
+    if(status==AnimationStatus.completed){
+      _animationController.reset();
+      _animation=Tween<double>(begin: 0.0,end: 1.0).animate(
+        CurvedAnimation(
+          curve: Curves.fastOutSlowIn,
+          parent: _animationController
+        )
+      );
+      _animationController.forward();
+    }
+
+
+  }
 
   
 
   @override
   Widget build(BuildContext context) {
+    final width=MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
       
         title: Text('Flutter Basic Animations'),
       ),
-      body: Center(
-        child: AnimatedLogo(animation: _animation,),
+      body: AnimatedBuilder(
+        
+        animation: _animationController,
+        builder: (context, child) =>Transform(
+          transform: Matrix4.translationValues(_animation.value*width, 0.0, 0.0),
+          child: Center(
+            child: Container(
+              height: 100,
+              width: 100,
+              color: Colors.deepOrangeAccent,
+            )
+          ),
+        ),
       )
     );
   }
 }
 
-class AnimatedLogo extends AnimatedWidget{
-
-
-
-
-  AnimatedLogo({
-    Key key,
-    Animation animation,
-
-  }):super(
-    key:key,
-    listenable:animation
-  );
-
-
-  @override
-  Widget build(BuildContext context) {
-    final Animation<double> animation=listenable;
-    return Opacity(
-      opacity: animation.value ,
-      child: Transform.scale(
-        scale: animation.value*10, 
-        child: Container(
-          child: FlutterLogo(),
-        ),
-      ),
-    );
-  }
-
-}
