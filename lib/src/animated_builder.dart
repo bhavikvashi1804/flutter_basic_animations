@@ -8,17 +8,15 @@ class AnimatedBuilderPage extends StatefulWidget {
   _AnimatedBuilderPageState createState() => _AnimatedBuilderPageState();
 }
 
-class _AnimatedBuilderPageState extends State<AnimatedBuilderPage> with SingleTickerProviderStateMixin{
-
-
+class _AnimatedBuilderPageState extends State<AnimatedBuilderPage>
+    with SingleTickerProviderStateMixin {
   AnimationController _animationController;
   Animation _animation;
 
   @override
   void initState() {
-   
-
-    _animationController=AnimationController(vsync: this,duration: Duration(seconds: 10))..repeat();
+    _animationController = AnimationController(duration: Duration(seconds: 10))
+      ..repeat();
 
     super.initState();
   }
@@ -28,7 +26,6 @@ class _AnimatedBuilderPageState extends State<AnimatedBuilderPage> with SingleTi
     _animationController.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -43,23 +40,17 @@ class _AnimatedBuilderPageState extends State<AnimatedBuilderPage> with SingleTi
           //random container is not rebuilding
           //only AnimatedBuilder is rebuilding
           child: AnimatedBuilder(
-            animation: _animationController, 
+            animation: _animationController,
             builder: (context, child) => Transform.rotate(
-              angle: _animationController.value*2.0*pi,
+              angle: _animationController.value * 2.0 * pi,
               child: child,
             ),
             child: Container(
               color: Colors.red,
             ),
-            
           ),
-
-          
-
-
         ),
       ),
-      
     );
   }
 }

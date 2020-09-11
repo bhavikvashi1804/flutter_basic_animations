@@ -6,27 +6,25 @@ class FlipperPage extends StatefulWidget {
   _FlipperPageState createState() => _FlipperPageState();
 }
 
-class _FlipperPageState extends State<FlipperPage> with SingleTickerProviderStateMixin {
-
-  bool _reversed=false;
+class _FlipperPageState extends State<FlipperPage>
+    with SingleTickerProviderStateMixin {
+  bool _reversed = false;
   Animation<double> _animation;
   AnimationController _animationController;
 
   @override
   void initState() {
-    
-    _animationController=AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 2000)
-    );
+    _animationController =
+        AnimationController(duration: Duration(milliseconds: 2000));
 
-     _animation = TweenSequence([
-      TweenSequenceItem(tween: Tween(begin: 0.0, end: -math.pi / 2), weight: 0.5),
+    _animation = TweenSequence([
+      TweenSequenceItem(
+          tween: Tween(begin: 0.0, end: -math.pi / 2), weight: 0.5),
       TweenSequenceItem(tween: Tween(begin: math.pi / 2, end: 0.0), weight: 0.5)
     ]).animate(_animationController);
 
-    //we have used here TweenSeq because 
-  
+    //we have used here TweenSeq because
+
     super.initState();
   }
 
@@ -35,7 +33,6 @@ class _FlipperPageState extends State<FlipperPage> with SingleTickerProviderStat
     _animationController.dispose();
     super.dispose();
   }
-
 
   //on tap handle the forward / reverse
   _doAnim() {
@@ -49,8 +46,6 @@ class _FlipperPageState extends State<FlipperPage> with SingleTickerProviderStat
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,21 +56,21 @@ class _FlipperPageState extends State<FlipperPage> with SingleTickerProviderStat
         child: AnimatedBuilder(
           animation: _animation,
           builder: (context, child) => Transform(
+            alignment: Alignment.center,
+            transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.001)
+              ..rotateY(_animation.value),
+            child: GestureDetector(
+              onTap: _doAnim,
+              child: IndexedStack(
+                children: <Widget>[CardOne(), CardTwo()],
                 alignment: Alignment.center,
-                transform: Matrix4.identity()
-                  ..setEntry(3, 2, 0.001)
-                  ..rotateY(_animation.value),
-                child: GestureDetector(
-                  onTap: _doAnim,
-                  child: IndexedStack(
-                    children: <Widget>[CardOne(), CardTwo()],
-                    alignment: Alignment.center,
-                    index: _animationController.value < 0.5 ? 0 : 1,
-                    // if val=0 then display CardOne 
-                    //else display CardTwo
-                  ),
-                ),
+                index: _animationController.value < 0.5 ? 0 : 1,
+                // if val=0 then display CardOne
+                //else display CardTwo
               ),
+            ),
+          ),
         ),
       ),
     );
